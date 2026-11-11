@@ -1,7 +1,6 @@
 # Watched Literals – gleiche Antwort, weniger Klauseln anfassen – Streamlit-Demo
 
-<!-- TODO nach dem Deploy: direkt hierher den Live-Link setzen (Leerzeile davor und danach):
-**[→ Demo live ausprobieren](https://sebastianhanisch-watched-literals-demo.streamlit.app/)** -->
+**[→ Demo live ausprobieren](https://sebastianhanisch-watched-literals-demo.streamlit.app/)**
 
 Zweites Stück der Linie **SAT und Constraint Programming** in der „Konzepte“-Reihe für die Website „Sebastian Hanisch – Operations Research und Machine Learning“. Anders als die Fall-Demos (ein Anwendungsfall, mehrere Verfahren im Vergleich) zeigt sie **eine technische Frage** an wachsenden Formeln: Das erste Stück der Linie lässt den SAT-Löser aus Konflikten lernen; **darunter** liegt die Propagation, die nach jeder Entscheidung die Folgerungen zieht. Diese Demo ändert nur sie: dieselbe Suche, einmal **naiv** (jede Klausel ansehen, in der ein Literal falsch wurde) und einmal mit **zwei beobachteten Literalen je Klausel** (Watched Literals, Technik des SAT-Lösers Chaff). Gezählt werden **Besuche** (angesehene Klauseln) und **Lesezugriffe** (nach ihrem Wert gefragte Literale), nie Sekunden. Vehikel sind Zufalls-3-SAT als Wachstumsmaß, die Färbung des Konfliktgraphen von Aufträgen auf Rampen (die Einkleidung der Linie) und das Schubfach als Grenzfall.
 
