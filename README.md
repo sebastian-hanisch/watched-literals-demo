@@ -56,7 +56,7 @@ Messreihen: Zufall und Rampen zehn feste Formeln je Größe (Zufalls-Seeds 7000 
 - **Der Klauselbestand wächst durch Lernen und bleibt.** Das Löschen gelernter Klauseln ändert die Beobachterlisten und damit die Zahlen; es kommt in dieser Demo nicht vor.
 - **Die Fixpunkt-Probe ist eine Stichprobe** (200 Entscheidungsfolgen je Familie, höchstens 6 Entscheidungen), kein Beweis; die Gleichheit der Fixpunkte folgt aus der Definition der Einheitspropagation (jeder Fixpunkt ist derselbe, die Reihenfolge der Schlüsse ändert ihn nicht), und `tests/test_oracle_watched_literals.py` prüft sie zusätzlich auf 200 Formeln gegen eine unabhängige Propagation.
 - **Schubfach h = 7 ist vorgerechnet.** Die App rechnet live h = 3 bis 6; die Zeile h = 7 stammt aus `wlt_messreihen.json`, ausdrücklich so gekennzeichnet.
-- **Rechenzeit der App.** Die Seitenleiste rechnet eine Formel in beiden Modi (Größenordnung eine bis wenige Sekunden an den Reglerrändern); die Messreihen brauchen Sekunden bis etwa eine halbe Minute und laufen deshalb auf Knopfdruck. Zeiten sind kein Befund.
+- **Rechenzeit der App.** Die Seitenleiste rechnet eine Formel in beiden Modi (Größenordnung eine bis wenige Sekunden an den Reglerrändern); die Messreihen brauchen Sekunden bis etwa eine halbe Minute und laufen deshalb auf Knopfdruck, mit Fortschrittsbalken (fertige Formeln); jede Formel wird zwischengespeichert, ein erneuter Klick mit gleicher Einstellung antwortet ohne Rechnung (`wlt_fortschritt.py`, ohne Änderung der Rechnung; Messreihe und Vergleich teilen den Speicher). Zeiten sind kein Befund.
 
 ## Befunde und Korrekturen gegenüber dem Plan
 
@@ -78,7 +78,7 @@ Messreihen: Zufall und Rampen zehn feste Formeln je Größe (Zufalls-Seeds 7000 
 
 ## Verifikation
 
-Die Suite hat 140 Tests (`pytest --collect-only -q tests`); einer davon (die naive Zeile Schubfach h = 7, rund drei bis fünf Minuten) läuft nur mit `WLT_LANGSAM=1` und ist sonst übersprungen.
+Die Suite hat 146 Tests (`pytest --collect-only -q tests`); einer davon (die naive Zeile Schubfach h = 7, rund drei bis fünf Minuten) läuft nur mit `WLT_LANGSAM=1` und ist sonst übersprungen.
 
 - **Kern:** Handbeispiel F2 Schritt für Schritt von Hand (jeder Besuch, jede gelesene Literalzahl, jeder Beobachter vorher und nachher: `tests/test_algorithm.py`); Mini-Instanz mit Klauseln der Länge 2 von Hand (Watched liest je Besuch genau ein Literal), Klausel der Länge 1 nur über die Suche; Randfälle: doppelte Literale, Tautologie, leere Klausel, leere Formel, leere Entscheidungsfolge, Konflikt gleich nach der ersten Entscheidung, lange Klauseln (Schubfach), Budget (`tests/test_edge_cases.py`).
 - **Orakel** (`tests/test_oracle_watched_literals.py`): (1) eine eigene Referenz-Propagation mit der Zählregel des Plans vergleicht Fixpunkt, Konflikt, Besuche, Lesezugriffe und Propagationen auf 200 Zufallsformeln mit Entscheidungsfolgen in beiden Modi; (2) eine einfachste Einheitspropagation ohne Warteschlange und Beobachter vergleicht den Fixpunkt; (3) die naiven Besuche sind die Summe der Vorkommen aller abgearbeiteten Literale; (4) die Antwort der ganzen Suche gegen OR-Tools CP-SAT (Zufall, Schubfach, Rampen, beide Modi, Modell geprüft); dazu Eigenschaften: Invariante der Beobachter nach der Propagation, Lesezugriffe ≥ Besuche und die Lesegrenzen je Besuch (Watched höchstens Länge − 1, naiv höchstens Länge), Umbenennen der Variablen, Beobachter nach dem Zurückspringen und nach dem Lernen.
@@ -104,6 +104,7 @@ Die Suite hat 140 Tests (`pytest --collect-only -q tests`); einer davon (die nai
 | `wlt_constants.py` | Regler-Grenzen, Familien, feste Seeds, Farben, Schnellstart |
 | `wlt_evaluation.py` | Messreihen, Kennzahlen, Verdikte als reine Funktionen |
 | `wlt_instanzen.py` | Kopie der Formelerzeuger |
+| `wlt_fortschritt.py` | Fortschrittsbalken und Zwischenspeicher für Messreihe und Vergleich (je Formel; keine eigene Rechnung) |
 | `wlt_layout.py` | Fester Kopf (Stylesheet) |
 | `wlt_messreihen.json` | vorgerechnete Schubfach-Zeilen (h = 3 bis 7) |
 | `wlt_presets.py` | Permalink (Begrenzen), Schnellstart in der Seitenleiste (aktiver Schnellstart-Knopf hervorgehoben), Zufalls-Seed-Knopf, gesperrte Regler je Familie |

@@ -109,11 +109,13 @@ def spaltenname(familie: str) -> str:
     return {C.FAMILIE_ZUFALL: "Variablen n", C.FAMILIE_RAMPEN: "Aufträge", C.FAMILIE_SCHUBFACH: "Löcher h"}[familie]
 
 
-def messreihe(familie: str, groessen=None, seeds=C.SWEEP_SEEDS, budget: int = C.BUDGET) -> list:
-    """Eine Zeile je Größe, gemessen über die festen Formeln (SWEEP_SEEDS); beide Modi, gleiche Formel, gleiches Budget."""
+def messreihe(familie: str, groessen=None, seeds=C.SWEEP_SEEDS, budget: int = C.BUDGET, vergleich=None) -> list:
+    """Eine Zeile je Größe, gemessen über die festen Formeln (SWEEP_SEEDS); beide Modi, gleiche Formel, gleiches Budget.
+    `vergleich(n, klauseln, budget)` ersetzt `A.vergleiche` (die App reicht eine zwischengespeicherte Fassung mit Fortschrittsanzeige herein, `wlt_fortschritt.py`)."""
+    vergleich = vergleich or A.vergleiche
     zeilen = []
     for g in (groessen if groessen is not None else groessen_der_familie(familie)):
-        paare = [A.vergleiche(f.n, f.klauseln, budget) for f in formeln_der_familie(familie, g, seeds)]
+        paare = [vergleich(f.n, f.klauseln, budget) for f in formeln_der_familie(familie, g, seeds)]
         zeilen.append(zeile(f"{familie}, {spaltenname(familie)} = {g}", g, paare))
     return zeilen
 
@@ -131,9 +133,9 @@ def vorgerechnete_zeilen(pfad: Path | None = None) -> list:
     return zeilen
 
 
-def messreihe_schubfach_mit_vorgerechnet(h_vorgerechnet=C.SCHUBFACH_VORGERECHNET) -> list:
+def messreihe_schubfach_mit_vorgerechnet(h_vorgerechnet=C.SCHUBFACH_VORGERECHNET, vergleich=None) -> list:
     """Schubfach h = 3 bis 6 live gemessen, dazu die vorgerechnete Zeile h = 7 (falls die Datei sie enthält)."""
-    zeilen = messreihe(C.FAMILIE_SCHUBFACH)
+    zeilen = messreihe(C.FAMILIE_SCHUBFACH, vergleich=vergleich)
     zeilen += [z for z in vorgerechnete_zeilen() if z["groesse"] == h_vorgerechnet]
     return zeilen
 

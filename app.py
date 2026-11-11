@@ -13,6 +13,7 @@ import streamlit as st
 import wlt_algorithm as A
 import wlt_constants as C
 import wlt_evaluation as ev
+import wlt_fortschritt as F
 import wlt_presets as P
 import wlt_scenario as S
 from wlt_layout import dunkles_design, kopf_css
@@ -39,30 +40,8 @@ ERGEBNIS_KURZ = {"erfuellt": "wahr (Klausel erfüllt)", "beobachter": "Beobachte
 
 
 @st.cache_data(show_spinner=False)
-def _vergleich(n, klauseln):
-    return A.vergleiche(n, klauseln)
-
-
-@st.cache_data(show_spinner=False)
 def _hand(n, klauseln, entscheidungen, watch):
     return A.handpropagation(n, klauseln, entscheidungen, watch)
-
-
-@st.cache_data(show_spinner=False)
-def _messreihe(familie):
-    if familie == C.FAMILIE_SCHUBFACH:
-        return ev.messreihe_schubfach_mit_vorgerechnet()
-    return ev.messreihe(familie)
-
-
-@st.cache_data(show_spinner=False)
-def _feste_formeln(familie, n, dichte):
-    """Die zehn festen Formeln der Größe aus der Seitenleiste, beide Modi (nur Zufalls-3-SAT und Rampen); sonst die eine Formel."""
-    if familie in (C.FAMILIE_ZUFALL, C.FAMILIE_RAMPEN):
-        formeln = [S.make_formel(familie, n=n, dichte=dichte, seed=s) for s in C.SWEEP_SEEDS]
-    else:
-        formeln = [S.make_formel(familie, n=n, dichte=dichte)]
-    return [(f.name, A.vergleiche(f.n, f.klauseln)) for f in formeln]
 
 
 @st.cache_data(show_spinner=False)
@@ -187,7 +166,7 @@ sync_query_params({"familie_select": familie, "n_slider": int(n), "dichte_slider
 settings = ev.Settings(familie, int(n), float(dichte), int(h), int(seed))
 formel = ev.formel_von(settings)
 with st.spinner("Rechne die Suche mit beiden Verfahren …"):
-    vergleich = _vergleich(formel.n, formel.klauseln)
+    vergleich = F.vergleich(formel.n, formel.klauseln, C.BUDGET)
 naiv, watch = vergleich["naiv"], vergleich["watch"]
 
 # --- Ergebnis ------------------------------------------------------------------------------------------------------------------------------
@@ -273,8 +252,8 @@ st.caption("Wie ändert sich der Vorsprung mit der Größe? Zehn feste Formeln j
 wachstum_name = st.radio("Familie der Messreihe", list(WACHSTUM_FAMILIEN), key="wachstum_familie")
 wachstum_familie = WACHSTUM_FAMILIEN[wachstum_name]
 if st.button("▶️ Messreihe rechnen", key="wachstum_knopf"):
-    with st.spinner("Rechne die Messreihe (je Größe zehn Formeln mit beiden Verfahren; wenige Sekunden bis etwa eine halbe Minute) …"):
-        st.session_state.setdefault("wachstum", {})[wachstum_familie] = _messreihe(wachstum_familie)
+    with F.fortschrittsbalken("Rechne die Messreihe (je Größe zehn Formeln mit beiden Verfahren), fertige Formeln") as melde:
+        st.session_state.setdefault("wachstum", {})[wachstum_familie] = F.messreihe(wachstum_familie, melde)
 zeilen = st.session_state.get("wachstum", {}).get(wachstum_familie)
 if zeilen:
     gname = ev.groessenname(wachstum_familie)
@@ -299,8 +278,9 @@ st.caption("Beide Verfahren erreichen bei jeder Entscheidungsfolge denselben Fix
            "Die Formeln stammen aus der Seitenleiste (Zufall und Rampen: zehn feste Formeln dieser Größe, sonst die eine Formel).")
 schluessel3 = (settings.familie, settings.n, settings.dichte, settings.h)
 if st.button("▶️ Vergleich rechnen", key="gleich_knopf"):
-    with st.spinner("Rechne die Formeln in beiden Modi und die Fixpunkt-Probe (200 zufällige Entscheidungsfolgen) …"):
-        paare = _feste_formeln(settings.familie, settings.n, settings.dichte)
+    with F.fortschrittsbalken("Rechne die Formeln in beiden Modi, fertige Formeln") as melde:
+        paare = F.feste_formeln(settings.familie, settings.n, settings.dichte, melde)
+    with st.spinner("Rechne die Fixpunkt-Probe (200 zufällige Entscheidungsfolgen) …"):
         probe = _probe(formel.n, formel.klauseln)
     st.session_state["gleich"] = (schluessel3, paare, probe)
 gleich = st.session_state.get("gleich")
