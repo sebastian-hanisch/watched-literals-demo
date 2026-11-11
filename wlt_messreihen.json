@@ -1,0 +1,216 @@
+{
+ "hinweis": "vorgerechnet mit tools/messreihen.py, nicht live; Schubfach h Löcher, h + 1 Tauben, naiv gegen Watched, gleiche Suche, Budget siehe unten",
+ "budget": 20000,
+ "schubfach": [
+  {
+   "label": "Schubfach, Löcher h = 3",
+   "groesse": 3,
+   "formeln": 1,
+   "naiv": {
+    "propagationen": 55,
+    "besuche": 95,
+    "lesezugriffe": 213,
+    "konflikte": 7,
+    "besuche_nach": {
+     "erfuellt": 23,
+     "beobachter": 0,
+     "einheit": 51,
+     "konflikt": 7,
+     "ohne_wirkung": 14
+    }
+   },
+   "watch": {
+    "propagationen": 55,
+    "besuche": 89,
+    "lesezugriffe": 124,
+    "konflikte": 7,
+    "besuche_nach": {
+     "erfuellt": 19,
+     "beobachter": 12,
+     "einheit": 51,
+     "konflikt": 7,
+     "ohne_wirkung": 0
+    }
+   },
+   "faktor": 1.717741935483871,
+   "faktor_je_propagation": 1.717741935483871,
+   "faktor_unter_1": 0,
+   "faktor_min": 1.717741935483871,
+   "faktor_median": 1.717741935483871,
+   "faktor_max": 1.717741935483871,
+   "abbrueche": 0,
+   "antwort_gleich": 1,
+   "konflikte_abweichend": 0,
+   "erfuellbar": 0,
+   "vorgerechnet": false
+  },
+  {
+   "label": "Schubfach, Löcher h = 4",
+   "groesse": 4,
+   "formeln": 1,
+   "naiv": {
+    "propagationen": 297,
+    "besuche": 829,
+    "lesezugriffe": 2190,
+    "konflikte": 28,
+    "besuche_nach": {
+     "erfuellt": 404,
+     "beobachter": 0,
+     "einheit": 272,
+     "konflikt": 28,
+     "ohne_wirkung": 125
+    }
+   },
+   "watch": {
+    "propagationen": 297,
+    "besuche": 669,
+    "lesezugriffe": 1140,
+    "konflikte": 28,
+    "besuche_nach": {
+     "erfuellt": 231,
+     "beobachter": 138,
+     "einheit": 272,
+     "konflikt": 28,
+     "ohne_wirkung": 0
+    }
+   },
+   "faktor": 1.9210526315789473,
+   "faktor_je_propagation": 1.9210526315789473,
+   "faktor_unter_1": 0,
+   "faktor_min": 1.9210526315789473,
+   "faktor_median": 1.9210526315789473,
+   "faktor_max": 1.9210526315789473,
+   "abbrueche": 0,
+   "antwort_gleich": 1,
+   "konflikte_abweichend": 0,
+   "erfuellbar": 0,
+   "vorgerechnet": false
+  },
+  {
+   "label": "Schubfach, Löcher h = 5",
+   "groesse": 5,
+   "formeln": 1,
+   "naiv": {
+    "propagationen": 1874,
+    "besuche": 26046,
+    "lesezugriffe": 110397,
+    "konflikte": 160,
+    "besuche_nach": {
+     "erfuellt": 19539,
+     "beobachter": 0,
+     "einheit": 1934,
+     "konflikt": 160,
+     "ohne_wirkung": 4413
+    }
+   },
+   "watch": {
+    "propagationen": 1827,
+    "besuche": 9916,
+    "lesezugriffe": 22861,
+    "konflikte": 159,
+    "besuche_nach": {
+     "erfuellt": 4558,
+     "beobachter": 3320,
+     "einheit": 1879,
+     "konflikt": 159,
+     "ohne_wirkung": 0
+    }
+   },
+   "faktor": 4.829053847163292,
+   "faktor_je_propagation": 4.707940970526859,
+   "faktor_unter_1": 0,
+   "faktor_min": 4.829053847163292,
+   "faktor_median": 4.829053847163292,
+   "faktor_max": 4.829053847163292,
+   "abbrueche": 0,
+   "antwort_gleich": 1,
+   "konflikte_abweichend": 1,
+   "erfuellbar": 0,
+   "vorgerechnet": false
+  },
+  {
+   "label": "Schubfach, Löcher h = 6",
+   "groesse": 6,
+   "formeln": 1,
+   "naiv": {
+    "propagationen": 14077,
+    "besuche": 1495287,
+    "lesezugriffe": 8065528,
+    "konflikte": 1057,
+    "besuche_nach": {
+     "erfuellt": 1338376,
+     "beobachter": 0,
+     "einheit": 15643,
+     "konflikt": 1057,
+     "ohne_wirkung": 140211
+    }
+   },
+   "watch": {
+    "propagationen": 13097,
+    "besuche": 271035,
+    "lesezugriffe": 755871,
+    "konflikte": 1004,
+    "besuche_nach": {
+     "erfuellt": 150543,
+     "beobachter": 105215,
+     "einheit": 14273,
+     "konflikt": 1004,
+     "ohne_wirkung": 0
+    }
+   },
+   "faktor": 10.670508592074574,
+   "faktor_je_propagation": 9.927658665227016,
+   "faktor_unter_1": 0,
+   "faktor_min": 10.670508592074574,
+   "faktor_median": 10.670508592074574,
+   "faktor_max": 10.670508592074574,
+   "abbrueche": 0,
+   "antwort_gleich": 1,
+   "konflikte_abweichend": 1,
+   "erfuellbar": 0,
+   "vorgerechnet": false
+  },
+  {
+   "label": "Schubfach, Löcher h = 7",
+   "groesse": 7,
+   "formeln": 1,
+   "naiv": {
+    "propagationen": 111315,
+    "besuche": 120843892,
+    "lesezugriffe": 842295340,
+    "konflikte": 8433,
+    "besuche_nach": {
+     "erfuellt": 113129787,
+     "beobachter": 0,
+     "einheit": 140653,
+     "konflikt": 8433,
+     "ohne_wirkung": 7565019
+    }
+   },
+   "watch": {
+    "propagationen": 63653,
+    "besuche": 6504952,
+    "lesezugriffe": 17895735,
+    "konflikte": 4811,
+    "besuche_nach": {
+     "erfuellt": 3772928,
+     "beobachter": 2656305,
+     "einheit": 70908,
+     "konflikt": 4811,
+     "ohne_wirkung": 0
+    }
+   },
+   "faktor": 47.066820111048806,
+   "faktor_je_propagation": 26.91411131050253,
+   "faktor_unter_1": 0,
+   "faktor_min": 47.066820111048806,
+   "faktor_median": 47.066820111048806,
+   "faktor_max": 47.066820111048806,
+   "abbrueche": 0,
+   "antwort_gleich": 1,
+   "konflikte_abweichend": 1,
+   "erfuellbar": 0,
+   "vorgerechnet": false
+  }
+ ]
+}
